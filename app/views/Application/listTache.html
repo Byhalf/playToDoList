@@ -4,15 +4,16 @@
 <h1>Liste des tâches</h1>
 
 #{if taches}
-<ul>
-    *{ A COMPLETER }*
-	<li id="*{ A COMPLETER }*">
-	    <input type="checkbox">
-	    <span class="title">*{ A COMPLETER }*</span>
-	    <a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
-	    <a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
-	</li>
-</ul>
+%{for(tache in taches) {}%
+	<ul>
+		<li id="${tache.id}">
+			<input type="checkbox" #{if tache.done} checked #{/if}>
+			<span class="title">${tache.title}</span>
+			<a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
+			<a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
+		</li>
+	</ul>
+%{}}%
 #{/if}
 #{else}
 	<p>Aucune tâche</p>
@@ -38,10 +39,11 @@
 
     // Validation d'une tâche (appel ajax - requête POST)
     $("input:checkbox").live("click", function(event){
+		console.log($(this).parent().attr('id'))
         $.ajax({
             url: '@{Application.validerTache()}',
             type: 'POST',  
-            data: {id: $(this).attr('id')}
+            data: {id: $(this).parent().attr('id')}
         });
     });
 
@@ -56,12 +58,10 @@
         var confirmSuppr = confirm('Supprimer la tâche ?');
         // Si click sur ok, requête ajax vers serveur pour supprimer la tâche
         if(confirmSuppr) {
-            // A COMPLETER
-            // ...
             $.ajax({
-                url: '',
-                type: '',
-                data: {},
+                url: '@{Application.supprimerTache()}',
+                type: 'DELETE',
+                data: {id: $(this).parent().attr('id')},
                 success: function(result) {
                     $('#' + result.id).remove();
                 }
@@ -79,12 +79,11 @@
         var newTitle = prompt('Tâche : ', $(this).prev().text());
         // Si click sur ok, requête ajax vers serveur pour modifier la tâche
         if(newTitle) {
-        	// A COMPLETER
-        	// ...
+			console.log($(this))
             $.ajax({
-                url: '',
-                type: '',
-                data: {},
+				url: '@{Application.editTache()}',
+				type: 'PUT',
+				data: {id: $(this).parent().attr('id'), title: newTitle},
                 success: function(result) {
                     $('#' + result.id + ' span').text(result.title);
                 }
