@@ -11,7 +11,7 @@ public class Application extends Controller {
     // Affiche toutes les tâches (voir variable taches) dans le template views/listTache.html
     public static void listTache() {
         List<Tache> taches = Tache.findAll();
-        render(taches);
+		render(taches);
     }
 
     // Affiche le template views/ajouterTacheForm.html (formulaire d'ajout d'une tâche)

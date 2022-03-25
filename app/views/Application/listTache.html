@@ -5,18 +5,18 @@
 
 #{if taches}
 %{for(tache in taches) {}%
-<ul>
-	<li id="${tache.id}">
-		<input type="checkbox" #{if tache.done} checked #{/if}>
-		<span class="title">${tache.title}</span>
-		<a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
-		<a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
-	</li>
-</ul>
+	<ul>
+		<li id="${tache.id}">
+			<input type="checkbox" #{if tache.done} checked #{/if}>
+			<span class="title">${tache.title}</span>
+			<a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
+			<a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
+		</li>
+	</ul>
 %{}}%
 #{/if}
 #{else}
-<p>Aucune tâche</p>
+	<p>Aucune tâche</p>
 #{/else}
 
 <p><a href="@{Application.ajouterTacheForm()}">Ajouter une nouvelle tâche</a></p>
@@ -24,71 +24,71 @@
 
 <script type="text/javascript" charset="utf-8">
 
-	// Exemple type d'une requête AJAX avec la bibliothèque JQuery.
-	// http://api.jquery.com/jQuery.ajax/
-	/*
+    // Exemple type d'une requête AJAX avec la bibliothèque JQuery.
+    // http://api.jquery.com/jQuery.ajax/
+    /*
     $.ajax({
         url: '', 	// NomControleur.nomMethode() (Spécifique à Play!)
         type: '',   // Type de la requete HTTP (GET, POST, PUT, ...)
         data: {},   // Données à envoyer au serveur
-        success: function(result) { // Fonction appelé en cas de success
+        success: function(result) { // Fonction appelé en cas de success      
         }
     });
     */
 
 
-	// Validation d'une tâche (appel ajax - requête POST)
-	$("input:checkbox").live("click", function(event){
+    // Validation d'une tâche (appel ajax - requête POST)
+    $("input:checkbox").live("click", function(event){
 		console.log($(this).parent().attr('id'))
-		$.ajax({
-			url: '@{Application.validerTache()}',
-			type: 'POST',
-			data: {id: $(this).parent().attr('id')}
-		});
-	});
+        $.ajax({
+            url: '@{Application.validerTache()}',
+            type: 'POST',  
+            data: {id: $(this).parent().attr('id')}
+        });
+    });
 
 
-	// Suppression d'une tâche (appel ajax - requête DELETE)
-	$('li a.del').click(function(event){
-		// Annule l'action implicite
-		// Ex. l'action implicite associée à un événement de type submit est l'envoi au serveur du formulaire concerné.
-		event.preventDefault();
+    // Suppression d'une tâche (appel ajax - requête DELETE)
+    $('li a.del').click(function(event){
+        // Annule l'action implicite
+        // Ex. l'action implicite associée à un événement de type submit est l'envoi au serveur du formulaire concerné.
+        event.preventDefault();
 
-		// Affiche une popup de confirmation de suppression
-		var confirmSuppr = confirm('Supprimer la tâche ?');
-		// Si click sur ok, requête ajax vers serveur pour supprimer la tâche
-		if(confirmSuppr) {
-			$.ajax({
-				url: '@{Application.supprimerTache()}',
-				type: 'DELETE',
-				data: {id: $(this).parent().attr('id')},
-				success: function(result) {
-					$('#' + result.id).remove();
-				}
-			});
-		}
-	});
+        // Affiche une popup de confirmation de suppression
+        var confirmSuppr = confirm('Supprimer la tâche ?');
+        // Si click sur ok, requête ajax vers serveur pour supprimer la tâche
+        if(confirmSuppr) {
+            $.ajax({
+                url: '@{Application.supprimerTache()}',
+                type: 'DELETE',
+                data: {id: $(this).parent().attr('id')},
+                success: function(result) {
+                    $('#' + result.id).remove();
+                }
+            });
+        }
+    });
 
 
-	// Modification d'un tâche (appel ajax - requête PUT)
-	$('li a.edit').click("click", function(event) {
-		// Annule l'action implicite
-		event.preventDefault();
-
-		// Affiche une popup de modification avec le titre de la tâche actuelle
-		var newTitle = prompt('Tâche : ', $(this).prev().text());
-		// Si click sur ok, requête ajax vers serveur pour modifier la tâche
-		if(newTitle) {
+    // Modification d'un tâche (appel ajax - requête PUT)
+    $('li a.edit').click("click", function(event) {
+        // Annule l'action implicite
+        event.preventDefault();
+        
+        // Affiche une popup de modification avec le titre de la tâche actuelle
+        var newTitle = prompt('Tâche : ', $(this).prev().text());
+        // Si click sur ok, requête ajax vers serveur pour modifier la tâche
+        if(newTitle) {
 			console.log($(this))
-			$.ajax({
+            $.ajax({
 				url: '@{Application.editTache()}',
 				type: 'PUT',
 				data: {id: $(this).parent().attr('id'), title: newTitle},
-				success: function(result) {
-					$('#' + result.id + ' span').text(result.title);
-				}
-			});
-		}
-	});
+                success: function(result) {
+                    $('#' + result.id + ' span').text(result.title);
+                }
+            });
+        }
+    });
 
 </script>
