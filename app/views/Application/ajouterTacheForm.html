@@ -3,4 +3,7 @@
 
 <h1>Ajouter une nouvelle tâche</h1>
 
-*{ A COMPLETER }*
+#{form @ajouterTache(), enctype:'multipart/form-data'}
+<input type="text" name="tache.title">
+<input type="submit" name="submit" value="Create">
+#{/form}
