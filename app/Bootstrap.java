@@ -1,7 +1,7 @@
 import models.Tache;
 import play.libs.WS;
 import play.jobs.Job;
-import play.jobs.OnApplicationStart;
+import play.jobs.Every;
 import play.test.Fixtures;
 
 import java.time.LocalDateTime;
