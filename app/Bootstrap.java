@@ -5,6 +5,7 @@ import play.jobs.Every;
 import play.test.Fixtures;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Every("1m")
@@ -13,7 +14,10 @@ public class Bootstrap extends Job {
     public void doJob() {
         String userToken = "u4eso4sb4ixcd4ybavutv1i5giisvj";
         String ApiToken = "aqep15mvuyho63dc4isnzq94e6muh9";
-        for (Tache tache: Tache.findAll()) {
+        List<Tache> taches = Tache.findAll();
+        System.out.println(taches.toString());
+        for (Tache tache:taches) {
+
             if(!tache.notification && tache.time.isBefore(LocalDateTime.now())){
                 WS.url("https://api.pushover.net/1/messages.json?token="+ApiToken+"&user="+userToken+"&message="+tache.title)
                         .post();
