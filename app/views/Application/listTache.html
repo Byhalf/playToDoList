@@ -9,6 +9,8 @@
 		<li id="${tache.id}">
 			<input type="checkbox" #{if tache.done} checked #{/if}>
 			<span class="title">${tache.title}</span>
+			<span class="time">${tache.time}</span>
+
 			<a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
 			<a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
 		</li>
