@@ -15,10 +15,8 @@ public class Bootstrap extends Job {
         String userToken = "u4eso4sb4ixcd4ybavutv1i5giisvj";
         String ApiToken = "aqep15mvuyho63dc4isnzq94e6muh9";
         List<Tache> taches = Tache.findAll();
-        System.out.println(taches.toString());
         for (Tache tache:taches) {
-
-            if(!tache.notification && tache.time.isBefore(LocalDateTime.now())){
+            if(!tache.notification && tache.time.isBefore(LocalDateTime.now(ZoneId.of("Europe/Paris")))){
                 WS.url("https://api.pushover.net/1/messages.json?token="+ApiToken+"&user="+userToken+"&message="+tache.title)
                         .post();
                 tache.notification = true;

@@ -10,6 +10,6 @@ public class Tache extends Model {
 
     public String title;
     public boolean done = false;
-    public LocalDateTime time =  LocalDateTime.now().plusMinutes(1);
+    public LocalDateTime time =  LocalDateTime.now(ZoneId.of("Europe/Paris")).plusMinutes(1);
     public boolean notification = false;
 }
