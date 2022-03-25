@@ -4,6 +4,7 @@ import play.jobs.Job;
 import play.jobs.Every;
 import play.test.Fixtures;
 
+import java.time.ZoneId;
 import java.time.LocalDateTime;
 import java.util.List;
 
