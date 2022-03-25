@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-@Every("1m")
+@Every("1mn")
 public class Bootstrap extends Job {
 
     public void doJob() {
