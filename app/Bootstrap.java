@@ -22,7 +22,7 @@ public class Bootstrap extends Job {
                 WS.url("https://api.pushover.net/1/messages.json?token="+ApiToken+"&user="+userToken+"&message="+tache.title)
                         .post();
                 tache.notification = true;
-
+                tache.save();
             }
         }
         // Load default data if the database is empty
